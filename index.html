@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanisha Guleria - AWS Cloud Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --secondary: #a855f7;
+            --accent: #ec4899;
+            --background: #0a0a0a;
+            --surface: #111111;
+            --surface-light: #1a1a1a;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--background);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .gradient-border {
+            position: relative;
+            background: var(--surface);
+            border-radius: 12px;
+        }
+        
+        .gradient-border::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 13px;
+            z-index: -1;
+        }
+        
+        .skill-badge {
+            transition: all 0.3s ease;
+            background-color: var(--surface-light) !important;
+            color: var(--text-primary) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .skill-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white !important;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -38px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 4px solid var(--surface);
+            z-index: 1;
+        }
+        
+        .vanta-bg {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            background: #0a0a0a;
+        }
+        .bg-canvas { 
+            position: absolute; 
+            inset: 0; 
+            width: 100%; 
+            height: 100%; 
+            display: block; 
+            pointer-events: none; 
+        }
+        
+        .grain {
+            position: absolute;
+            inset: -50%;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.035"/></svg>');
+            background-size: 200px 200px;
+            animation: grainShift 14s steps(10) infinite;
+            mix-blend-mode: overlay;
+        }
+        @keyframes grainShift {
+            0% { transform: translate3d(0,0,0); }
+            100% { transform: translate3d(-8%, -8%, 0); }
+        }
+        .vignette {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 3px;
+        }
+        
+        .progress-bar {
+            background: var(--surface-light);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 8px;
+            border-radius: 100px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+        
+        /* Elevate content above background */
+        section, footer { position: relative; z-index: 1; }
+        #mobile-menu { z-index: 40; }
+        
+        /* Button interactions */
+        .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; transition: transform 0.2s ease, box-shadow 0.3s ease; will-change: transform; }
+        .btn:active { transform: translateY(1px) scale(0.99); }
+        .btn-glow { box-shadow: 0 0 0 rgba(0,0,0,0); }
+        .btn-glow::before {
+            content: ""; position: absolute; inset: -2px; border-radius: 12px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+            background: radial-gradient(120px 60px at var(--mx,50%) var(--my,50%), rgba(129,140,248,0.35), transparent 60%);
+        }
+        .btn-glow:hover::before { opacity: 1; }
+        .btn-press:hover { transform: translateY(-2px) scale(1.01); }
+        .btn-outline { border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); }
+        
+        /* New styles for particle network */
+        .particle-network {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .particle:nth-child(odd) {
+            background: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+            animation: float 18s infinite ease-in-out;
+        }
+        
+        .particle:nth-child(3n) {
+            background: rgba(236, 72, 153, 0.4);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+            animation: float 12s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(20px, 15px) scale(1.05); }
+            50% { transform: translate(-10px, 20px) scale(0.95); }
+            75% { transform: translate(-15px, -10px) scale(1.1); }
+        }
+        
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        'primary-light': '#818cf8',
+                        'primary-dark': '#4f46e5',
+                        secondary: '#a855f7',
+                        accent: '#ec4899',
+                        background: '#0a0a0a',
+                        surface: '#111111',
+                        'surface-light': '#1a1a1a',
+                        'text-primary': '#fafafa',
+                        'text-secondary': '#a1a1aa',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-text-primary">
+    <div class="particle-network" id="particle-network"></div>
+    <div class="vanta-bg">
+        <canvas id="bg-canvas" class="bg-canvas"></canvas>
+        <div class="grain"></div>
+        <div class="vignette"></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-dark py-3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold gradient-text">Tanisha Guleria</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-text-secondary hover:text-primary transition">About</a>
+                    <a href="#experience" class="text-text-secondary hover:text-primary transition">Experience</a>
+                    <a href="#skills" class="text-text-secondary hover:text-primary transition">Skills</a>
+                    <a href="#education" class="text-text-secondary hover:text-primary transition">Education</a>
+                    <a href="#contact" class="px-4 py-2 gradient-bg text-white rounded-md hover:opacity-90 transition">Contact</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="menu-btn" class="text-text-primary">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 glass-dark z-40 flex flex-col items-center justify-center space-y-8">
+        <button id="close-btn" class="absolute top-6 right-6 text-text-primary">
+            <i data-feather="x"></i>
+        </button>
+        <a href="#about" class="text-2xl font-medium text-text-primary hover:text-primary">About</a>
+        <a href="#experience" class="text-2xl font-medium text-text-primary hover:text-primary">Experience</a>
+        <a href="#skills" class="text-2xl font-medium text-text-primary hover:text-primary">Skills</a>
+        <a href="#education" class="text-2xl font-medium text-text-primary hover:text-primary">Education</a>
+        <a href="#contact" class="px-6 py-3 gradient-bg text-white rounded-md text-xl hover:opacity-90">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Tanisha Guleria</h1>
+                    <h2 class="text-2xl md:text-3xl font-medium mb-6 gradient-text">Cloud DevOps Engineer</h2>
+                    <p class="text-lg mb-8 text-text-secondary">Technically-savvy with expertise in AWS Cloud, specializing in building, deploying, and modernizing scalable solutions.</p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="btn btn-glow btn-press px-6 py-3 gradient-bg text-white rounded-md font-medium hover:opacity-90 transition">Get In Touch</a>
+                        <a href="#experience" class="btn btn-glow btn-press px-6 py-3 glass border border-white/10 text-white rounded-md font-medium hover:bg-white/5 transition">My Work</a>
+                    </div>
+                </div>
+                <div data-aos="fade-left" class="flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-surface-light shadow-xl glass hover-lift">
+                            <img src="./avatar.jpg" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-5 -right-5 glass rounded-full p-4 shadow-lg">
+                            <i data-feather="award" class="text-primary w-8 h-8"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold mb-4 section-title inline-block">About Me</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h3 class="text-2xl font-semibold mb-4">Who I Am</h3>
+                    <p class="text-text-secondary mb-6">I'm an AWS Cloud Developer with expertise in building, deploying, and modernizing scalable solutions. Skilled in resolving technical challenges, streamlining infrastructure with Terraform, and enhancing security through robust CI/CD pipelines.</p>
+                    <p class="text-text-secondary mb-6">I have proven ability to deliver seamless migrations and optimize legacy systems across environments. My technical proficiency spans across various AWS services, DevOps tools, and programming languages.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center glass rounded-lg px-4 py-2">
+                            <i data-feather="map-pin" class="text-primary mr-2"></i>
+                            <span class="text-text-primary">Bengaluru, India</span>
+                        </div>
+                        <div class="flex items-center glass rounded-lg px-4 py-2">
+                            <i data-feather="mail" class="text-primary mr-2"></i>
+                            <span class="text-text-primary">tanishaguleria3@gmail.com</span>
+                        </div>
+                        <div class="flex items-center glass rounded-lg px:4 py-2">
+                            <i data-feather="phone" class="text-primary mr-2"></i>
+                            <span class="text-text-primary">+91-9148754749</span>
+                        </div>
+                    </div>
+                </div>
+                <div data-aos="fade-left">
+                    <div class="glass p-8 rounded-xl">
+                        <h3 class="text-xl font-semibold mb-6">My Expertise</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">AWS Cloud Services</span>
+                                    <span class="text-primary">95%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">DevOps & CI/CD</span>
+                                    <span class="text-primary">90%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">Infrastructure as Code</span>
+                                    <span class="text-primary">85%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">Security Optimization</span>
+                                    <span class="text-primary">88%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 88%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold mb-4 section-title inline-block">Work Experience</h2>
+            </div>
+            <div class="relative">
+                <div class="absolute left-8 md:left-1/2 h-full w-0.5 bg-gradient-to-b from-primary to-secondary"></div>
+                
+                <!-- Capgemini -->
+                <div class="mb-12" data-aos="fade-up">
+                    <div class="relative pl-12 md:pl-0 md:grid md:grid-cols-2 md:gap-8">
+                        <div class="md:pr-8 md:text-right">
+                            <h3 class="text-xl font-semibold">Devops/AWS Cloud Developer</h3>
+                            <p class="text-primary">Capgemini: Project: HP Inc</p>
+                            <p class="text-text-secondary">11/2021 - 09/2025</p>
+                            <p class="text-text-secondary">Bengaluru, KA INDIA</p>
+                        </div>
+                        <div class="mt-4 md:mt-0 pl-12 md:pl-8 timeline-item">
+                            <div class="glass p-6 rounded-xl hover-lift">
+                                <h4 class="text-lg font-medium mb-4">Achievements/Tasks</h4>
+                                <ul class="space-y-3 text-text-secondary">
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Migrated the legacy hp.com website to a modernized solution using AWS Cloud services</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Implemented URL redirection and rewriting rules based on regex patterns</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Developed serverless functions in JavaScript for dynamic redirection handling</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Automated infrastructure provisioning using Terraform</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Addressed STS and Veracode security issues ensuring compliance</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barlen Consulting -->
+                <div class="mb-12" data-aos="fade-up">
+                    <div class="relative pl-12 md:pl-0 md:grid md:grid-cols-2 md:gap-8">
+                        <div class="md:pr-8 md:text-right">
+                            <h3 class="text-xl font-semibold">Full Stack Developer</h3>
+                            <p class="text-primary">Barlen Consulting (BCL), Auckland NZ</p>
+                            <p class="text-text-secondary">01/2024 - Present</p>
+                            <p class="text-text-secondary">Remote, Part-time Contractual</p>
+                        </div>
+                        <div class="mt-4 md:mt-0 pl-12 md:pl-8 timeline-item">
+                            <div class="glass p-6 rounded-xl hover-lift">
+                                <h4 class="text-lg font-medium mb-4">Key Responsibilities & Achievements</h4>
+                                <ul class="space-y-3 text-text-secondary">
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Designed and implemented scalable web applications using React.js, Node.js, and Express</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Reduced frontend load time by 30% through code optimization</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Deployed applications on AWS using Terraform for IaC</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Achieved 99.8% uptime and reduced deployment time by 40%</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Migrated legacy systems to PostgreSQL, improving query performance by 40%</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- McDonald's Project -->
+                <div class="mb-12" data-aos="fade-up">
+                    <div class="relative pl-12 md:pl-0 md:grid md:grid-cols-2 md:gap-8">
+                        <div class="md:pr-8 md:text-right">
+                            <h3 class="text-xl font-semibold">Devops</h3>
+                            <p class="text-primary">Project: McDonald's</p>
+                            <p class="text-text-secondary">Capgemini</p>
+                        </div>
+                        <div class="mt-4 md:mt-0 pl-12 md:pl-8 timeline-item">
+                            <div class="glass p-6 rounded-xl hover-lift">
+                                <h4 class="text-lg font-medium mb-4">Achievements/Tasks</h4>
+                                <ul class="space-y-3 text-text-secondary">
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Deployed and maintained the application for McDonald's offers and deals globally</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Used Git and GitHub actions for automated build process</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Designed and implemented scalable CI/CD pipelines</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Triaged P1 and P2 issues with high error rate for containers and lambdas</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DXC Technology -->
+                <div data-aos="fade-up">
+                    <div class="relative pl-12 md:pl-0 md:grid md:grid-cols-2 md:gap-8">
+                        <div class="md:pr-8 md:text-right">
+                            <h3 class="text-xl font-semibold">Linux Dev</h3>
+                            <p class="text-primary">DXC Technology</p>
+                            <p class="text-text-secondary">Devops/SRE - 1st level support</p>
+                        </div>
+                        <div class="mt-4 md:mt-0 pl-12 md:pl-8 timeline-item">
+                            <div class="glass p-6 rounded-xl hover-lift">
+                                <h4 class="text-lg font-medium mb-4">Achievements/Tasks</h4>
+                                <ul class="space-y-3 text-text-secondary">
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Provided application diagnostics and troubleshooting</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Monitored system resources including memory, CPU, and disk usage</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Configured applications and software for client Honeywell</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i data-feather="check-circle" class="text-primary mr-2 mt-1 flex-shrink-0"></i>
+                                        <span>Worked with TCP/IP, DNS, SMTP, HTTP/HTTPS, and SSL protocols</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold mb-4 section-title inline-block">Technical Skills</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Cloud Services -->
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass p-8 rounded-xl h-full hover-lift">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                            <i data-feather="cloud" class="text-white w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Cloud Services</h3>
+                        <div class="space-y-3">
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">AWS Lambda</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Amazon S3</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">CloudFront</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">EC2</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">DynamoDB</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">API Gateway</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Auto Scaling</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">VPC & Networking</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Route 53</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DevOps Tools -->
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <div class="glass p-8 rounded-xl h-full hover-lift">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                            <i data-feather="code" class="text-white w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">DevOps Tools</h3>
+                        <div class="space-y-3">
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Terraform</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Docker</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Kubernetes</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">GitHub Actions</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Jenkins</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">CloudInit</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">JIRA</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">New Relic</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">CI/CD</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Programming -->
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <div class="glass p-8 rounded-xl h-full hover-lift">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                            <i data-feather="cpu" class="text-white w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Programming</h3>
+                        <div class="space-y-3">
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">JavaScript</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Python</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Node.js</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">React.js</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Express</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Bash</span>
+                            <span class="skill-badge inline-block px-3 py-1 rounded-full text-sm">Regex</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold mb-4 section-title inline-block">Education</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- B.Tech -->
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass p-8 rounded-xl h-full hover-lift">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                            <i data-feather="award" class="text-white w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">B.Tech Computer Science</h3>
+                        <p class="text-primary mb-4">Reva University</p>
+                        <p class="text-text-secondary mb-4">CGPA: 6.41</p>
+                        <div class="flex items-center text-text-secondary">
+                            <i data-feather="calendar" class="mr-2 w-4 h-4"></i>
+                            <span>2017 - 2021</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Diploma -->
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <div class="glass p-8 rounded-xl h-full hover-lift">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                            <i data-feather="book" class="text-white w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Diploma in Computer Science</h3>
+                        <p class="text-primary mb-4">MP Board</p>
+                        <p class="text-text-secondary mb-4">Percentage: 70%</p>
+                        <div class="flex items-center text-text-secondary">
+                            <i data-feather="calendar" class="mr-2 w-4 h-4"></i>
+                            <span>2014 - 2017</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SSLC -->
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <div class="glass p-8 rounded-xl h-full hover-lift">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                            <i data-feather="book-open" class="text-white w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">SSLC</h3>
+                        <p class="text-primary mb-4">St. Mary's High School</p>
+                        <p class="text-text-secondary mb-4">CGPA: 8.4</p>
+                        <div class="flex items-center text-text-secondary">
+                            <i data-feather="calendar" class="mr-2 w-4 h-4"></i>
+                            <span>2014</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold mb-4 section-title inline-block">Certifications</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div data-aos="fade-right">
+                    <div class="glass p-8 rounded-xl hover-lift">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+                                <i data-feather="certificate" class="text-white w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">IoT and Ethical Hacking</h3>
+                                <p class="text-primary mb-4">Internshala.com</p>
+                                <p class="text-text-secondary">Completed comprehensive training in IoT technologies and ethical hacking methodologies.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-aos="fade-left">
+                    <div class="glass p-8 rounded-xl hover-lift">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+                                <i data-feather="award" class="text-white w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Academic Projects</h3>
+                                <p class="text-primary mb-4">Reva University</p>
+                                <p class="text-text-secondary">Created a Node.js React app using Bootstrap and deployed it online using Heroku. Contributed to a Movie Recommendation project with technical paper published.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold mb-4 section-title inline-block">Get In Touch</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div data-aos="fade-right">
+                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start glass rounded-lg p-4">
+                            <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i data-feather="mail" class="text-white w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Email</h4>
+                                <a href="mailto:tanishaguleria3@gmail.com" class="text-primary hover:underline">tanishaguleria3@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start glass rounded-lg p-4">
+                            <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i data-feather="phone" class="text-white w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Phone</h4>
+                                <a href="tel:+919148754749" class="text-primary hover:underline">+91-9148754749</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start glass rounded-lg p-4">
+                            <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i data-feather="map-pin" class="text-white w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Location</h4>
+                                <p class="text-text-secondary">Bengaluru, India</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start glass rounded-lg p-4">
+                            <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i data-feather="linkedin" class="text-white w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">LinkedIn</h4>
+                                <a href="https://www.linkedin.com/in/tanishaguleria" target="_blank" rel="noopener" class="text-primary hover:underline">linkedin.com/in/tanishaguleria</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start glass rounded-lg p-4">
+                            <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i data-feather="github" class="text-white w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">GitHub</h4>
+                                <a href="https://github.com/techtg7" target="_blank" rel="noopener" class="text-primary hover:underline">github.com/techtg7</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Removed the Send Me a Message form column -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold mb-6 gradient-text">Tanisha Guleria</h2>
+                <p class="text-text-secondary mb-8">AWS Cloud Developer | DevOps Engineer | Full Stack Developer</p>
+                                        <div class="flex justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-8 flex-col sm:flex-row">
+                    <a href="https://www.linkedin.com/in/tanishaguleria" target="_blank" rel="noopener" class="text-text-secondary hover:text-primary transition">
+                        <i data-feather="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/techtg7" target="_blank" rel="noopener" class="text-text-secondary hover:text-primary transition flex items-center gap-2">
+                        <i data-feather="github"></i><span class="text-sm">techtg7</span>
+                    </a>
+                    <a href="https://github.com/Devtg7" target="_blank" rel="noopener" class="text-text-secondary hover:text-primary transition flex items-center gap-2">
+                        <i data-feather="github"></i><span class="text-sm">Devtg7</span>
+                    </a>
+                    <a href="mailto:tanishaguleria3@gmail.com" class="text-text-secondary hover:text-primary transition">
+                        <i data-feather="mail"></i>
+                    </a>
+                    <a href="tel:+919148754749" class="text-text-secondary hover:text-primary transition">
+                        <i data-feather="phone"></i>
+                    </a>
+                </div>
+                <p class="text-text-secondary text-sm">© 2025 Tanisha Guleria. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        feather.replace();
+
+        // Mouse-tracked glow variables for buttons
+        document.addEventListener('mousemove', (e) => {
+            const r = e.target.closest('.btn-glow');
+            if (!r) return;
+            const rect = r.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            r.style.setProperty('--mx', x + '%');
+            r.style.setProperty('--my', y + '%');
+        });
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('flex');
+            mobileMenu.classList.add('hidden');
+        });
+
+        // Create particle network background
+        function createParticleNetwork() {
+            const container = document.getElementById('particle-network');
+            const particleCount = 30;
+            
+            // Create particles
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 3-8px
+                const size = Math.random() * 5 + 3;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                particle.style.left = `${x}%`;
+                particle.style.top = `${y}%`;
+                
+                // Random animation delay
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(particle);
+            }
+            
+            // Create canvas for connections
+            const canvas = document.createElement('canvas');
+            canvas.classList.add('bg-canvas');
+            container.appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = container.offsetWidth;
+                canvas.height = container.offsetHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Get all particles
+            const particles = document.querySelectorAll('.particle');
+            
+            // Draw connections
+            function drawConnections() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                const positions = [];
+                
+                // Get positions of all particles
+                particles.forEach(particle => {
+                    const rect = particle.getBoundingClientRect();
+                    const containerRect = container.getBoundingClientRect();
+                    
+                    const x = rect.left + rect.width/2 - containerRect.left;
+                    const y = rect.top + rect.height/2 - containerRect.top;
+                    
+                    positions.push({ x, y });
+                });
+                
+                // Draw lines between nearby particles
+                for (let i = 0; i < positions.length; i++) {
+                    for (let j = i + 1; j < positions.length; j++) {
+                        const dx = positions[i].x - positions[j].x;
+                        const dy = positions[i].y - positions[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        // Only draw lines for particles that are close
+                        if (distance < 150) {
+                            // Calculate line opacity based on distance
+                            const opacity = 1 - distance / 150;
+                            
+                            ctx.beginPath();
+                            ctx.moveTo(positions[i].x, positions[i].y);
+                            ctx.lineTo(positions[j].x, positions[j].y);
+                            ctx.strokeStyle = `rgba(129, 140, 248, ${opacity * 0.3})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(drawConnections);
+            }
+            
+            drawConnections();
+        }
+        
+        createParticleNetwork();
+    </script>
+    <script src="effects.js" defer></script>
+</body>
+</html>
