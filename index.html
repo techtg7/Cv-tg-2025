@@ -322,8 +322,8 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div data-aos="fade-right">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">Tanisha Guleria</h1>
-                    <h2 class="text-2xl md:text-3xl font-medium mb-6 gradient-text">Cloud DevOps Engineer</h2>
-                    <p class="text-lg mb-8 text-text-secondary">Technically-savvy with expertise in AWS Cloud, specializing in building, deploying, and modernizing scalable solutions.</p>
+                    <h2 class="text-2xl md:text-3xl font-medium mb-6 gradient-text">AWS Cloud Developer </h2>
+                    <p class="text-lg mb-8 text-text-secondary">Technically-savvy with expertise in AWS Cloud, specializing in building, deploying, designing, and modernizing scalable solutions.</p>
                     <div class="flex space-x-4">
                         <a href="#contact" class="btn btn-glow btn-press px-6 py-3 gradient-bg text-white rounded-md font-medium hover:opacity-90 transition">Get In Touch</a>
                         <a href="#experience" class="btn btn-glow btn-press px-6 py-3 glass border border-white/10 text-white rounded-md font-medium hover:bg-white/5 transition">My Work</a>
@@ -762,15 +762,6 @@
                         </div>
                         <div class="flex items-start glass rounded-lg p-4">
                             <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center mr-4 mt-1">
-                                <i data-feather="phone" class="text-white w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Phone</h4>
-                                <a href="tel:+919148754749" class="text-primary hover:underline">+91-9148754749</a>
-                            </div>
-                        </div>
-                        <div class="flex items-start glass rounded-lg p-4">
-                            <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center mr-4 mt-1">
                                 <i data-feather="map-pin" class="text-white w-5 h-5"></i>
                             </div>
                             <div>
@@ -803,6 +794,20 @@
         </div>
     </section>
 
+    <!-- Pikachu Mini-Game -->
+    <section id="game" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2 section-title inline-block">Pikachu Mini-Game</h2>
+                <p class="text-text-secondary">Press Space / Tap to jump and avoid the yarn balls.</p>
+            </div>
+            <div class="flex flex-col items-center space-y-4">
+                <canvas id="cat-game" width="640" height="240" class="w-full max-w-3xl border border-white/10 rounded-lg"></canvas>
+                <button id="cat-start" class="btn btn-glow btn-press px-5 py-2 gradient-bg text-white rounded-md">Start</button>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="py-12 border-t border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -822,9 +827,7 @@
                     <a href="mailto:tanishaguleria3@gmail.com" class="text-text-secondary hover:text-primary transition">
                         <i data-feather="mail"></i>
                     </a>
-                    <a href="tel:+919148754749" class="text-text-secondary hover:text-primary transition">
-                        <i data-feather="phone"></i>
-                    </a>
+
                 </div>
                 <p class="text-text-secondary text-sm">© 2025 Tanisha Guleria. All rights reserved.</p>
             </div>
@@ -957,6 +960,120 @@
         }
         
         createParticleNetwork();
+
+        // Cat Mini-Game (simple runner)
+        (function(){
+            const canvas = document.getElementById('cat-game');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const startBtn = document.getElementById('cat-start');
+
+            const G = 0.8;
+            const JUMP_VELOCITY = -12;
+            let pikachu, obstacles, score, running, velocityY, groundY, spawnTimer;
+
+            function reset(){
+                groundY = canvas.height - 40;
+                pikachu = { x: 60, y: groundY, w: 28, h: 28, vy: 0, onGround: true };
+                obstacles = [];
+                score = 0;
+                running = false;
+                spawnTimer = 0;
+                draw();
+            }
+
+            function spawn(){
+                const size = 18 + Math.random()*16;
+                const speed = 4 + Math.random()*3;
+                obstacles.push({ x: canvas.width + 10, y: groundY + (Math.random()<0.35 ? -46 : -size), w: size, h: size, vx: -speed });
+            }
+
+            function jump(){
+                if (!running) return;
+                if (pikachu.onGround){
+                    pikachu.vy = JUMP_VELOCITY;
+                    pikachu.onGround = false;
+                }
+            }
+
+            function step(){
+                if (!running) return;
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+
+                // Ground line
+                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+                ctx.beginPath(); ctx.moveTo(0, groundY + 0.5); ctx.lineTo(canvas.width, groundY + 0.5); ctx.stroke();
+
+                // Update Pikachu
+                pikachu.vy += G;
+                pikachu.y += pikachu.vy;
+                if (pikachu.y >= groundY){ pikachu.y = groundY; pikachu.vy = 0; pikachu.onGround = true; }
+
+                // Draw Cat (simple pixel cat)
+                ctx.fillStyle = '#e5e7eb';
+                const cx = pikachu.x, cy = pikachu.y - pikachu.h/2;
+                // head
+                ctx.fillRect(cx-10, cy-10, 20, 18);
+                // ears
+                ctx.fillRect(cx-12, cy-14, 6, 6);
+                ctx.fillRect(cx+6, cy-14, 6, 6);
+                // eyes
+                ctx.fillStyle = '#111';
+                ctx.fillRect(cx-5, cy-4, 2, 2);
+                ctx.fillRect(cx+3, cy-4, 2, 2);
+                // nose
+                ctx.fillStyle = '#f472b6';
+                ctx.fillRect(cx-1, cy-1, 2, 2);
+
+                // Obstacles (rolling yarn balls)
+                spawnTimer--;
+                if (spawnTimer<=0){ spawn(); spawnTimer = 50 + Math.random()*50; }
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 2;
+                for (let i=obstacles.length-1;i>=0;i--){
+                    const o = obstacles[i];
+                    o.x += o.vx;
+                    // yarn ball
+                    const top = o.y - o.h;
+                    ctx.beginPath();
+                    ctx.arc(o.x, top + o.h/2, o.w/2, 0, Math.PI*2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(o.x - o.w/2, top + o.h/2);
+                    ctx.lineTo(o.x + o.w/2, top + o.h/2);
+                    ctx.stroke();
+
+                    // Collision
+                    const px = pikachu.x, py = pikachu.y - pikachu.h/2;
+                    if (px > o.x-10 && px < o.x+10 && py > top && py < top+o.h){
+                        running = false; startBtn.disabled = false; startBtn.textContent = 'Restart';
+                    }
+                    if (o.x < -20){ obstacles.splice(i,1); score++; }
+                }
+
+                // Score
+                ctx.fillStyle = 'rgba(255,255,255,0.6)';
+                ctx.font = '14px Inter, sans-serif';
+                ctx.fillText('Score: '+score, canvas.width-90, 24);
+
+                requestAnimationFrame(step);
+            }
+
+            function draw(){
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                ctx.fillStyle = 'rgba(255,255,255,0.6)';
+                ctx.font = '16px Inter, sans-serif';
+                ctx.fillText('Press Start, then Space / Tap to jump', 20, 40);
+            }
+
+            startBtn.addEventListener('click', () => {
+                reset(); running = true; startBtn.disabled = true; startBtn.textContent = 'Running...'; requestAnimationFrame(step);
+            });
+            window.addEventListener('keydown', (e)=>{ if (e.code==='Space'){ e.preventDefault(); jump(); }});
+            canvas.addEventListener('touchstart', (e)=>{ e.preventDefault(); jump(); }, {passive:false});
+
+            reset();
+        })();
     </script>
     <script src="effects.js" defer></script>
 </body>
